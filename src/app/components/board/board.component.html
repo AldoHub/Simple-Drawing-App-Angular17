@@ -1,0 +1,14 @@
+<div class="board-wrapper">
+
+    <div class="board">
+        <canvas #canvas
+        [width] = 'canvasWidth'
+        [height] = 'canvasHeight'
+        (mousedown) = 'startDrawing($event, selectedColor, penThickness)'
+        (mousemove) = 'draw($event)'
+        (mouseup) = 'endDrawing()'
+        ></canvas>
+    </div>
+
+
+</div>
