@@ -11,4 +11,25 @@
     </div>
 
 
+    <div class="tools-bar-wrapper">
+        <div>
+            <button (click)="revertLastChange()">Revert</button>
+            <button (click)="clearCanvas()">Clear</button>
+        </div>
+
+        <div>
+            <button (click)="changeThickness(1)">Thin</button>
+            <button (click)="changeThickness(5)">Medium</button>
+            <button (click)="changeThickness(10)">Thick</button>
+        </div>
+
+
+        <div>
+            <input type="color" (change)="changeColor($event)"/>
+        </div>
+
+    </div>
+
+
+
 </div>

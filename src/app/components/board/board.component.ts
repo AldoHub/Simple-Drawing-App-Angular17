@@ -3,8 +3,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Path } from '../../interfaces/path';
 
 
-//TODO --- 21:57
-
 @Component({
   selector: 'app-board',
   standalone: true,
@@ -87,6 +85,7 @@ export class BoardComponent implements AfterViewInit {
 
 
   clearCanvas(){
+    console.log("CLEARING CANVAS...")
     if(this.context){
       this.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
       const backgroundImage = new Image();
@@ -109,6 +108,65 @@ export class BoardComponent implements AfterViewInit {
     this.paths = [];
     
   }
+
+
+  changeThickness(value: number): void{
+    this.penThickness = value;
+    this.ctx.lineWidth = this.penThickness;
+  }
+
+
+  changeColor(event: any):void {
+    //parse into an element input and get the value
+    let color = event.target as HTMLInputElement;
+    this.selectedColor = color.value;
+    this.ctx.strokeStyle = this.selectedColor;
+    
+  }
+
+  revertLastChange(){
+    //check we have at least one path
+    if(this.paths.length > 0){
+      //remove the last past
+      this.paths.pop();
+
+      //clean the canvas and redo the image
+      this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+      //draw the background again
+      const backgroundImage = new Image();
+      backgroundImage.src= this.bgImage; // set a background image to use
+     
+      //load the image
+      backgroundImage.onload = () => {
+        this.ctx.drawImage(
+          backgroundImage,
+          0,
+          0,
+          this.canvas.nativeElement.width,
+          this.canvas.nativeElement.height
+        );
+       
+      }
+
+
+      //draw the paths again
+      this.paths.map((path) => {
+        this.ctx.strokeStyle = path.color;
+        this.ctx.lineWidth = path.thickness;
+        this.ctx.stroke(path.path);
+      });
+
+
+    }
+ 
+ 
+ 
+  }
+  
+  
+
+
 
 
 
